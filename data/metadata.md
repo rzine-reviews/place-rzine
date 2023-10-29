@@ -1,1 +1,1 @@
-> Décrivez les données mises à disposition dans ce fichier
+> The example data used in this tutorial was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936]. The original dataset can be downloaded from [Zenodo](https://zenodo.org/record/8047064). It is freely accessible and open for reuse. In this tutorial, we shall use a simplified version of the original dataset, which we describe below. 
