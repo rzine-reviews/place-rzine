@@ -38,7 +38,7 @@ knitr::opts_chunk$set(echo=TRUE,
                       class.output="bg-warning")
 
 
-library(tidyverse)
+library(dplyr)
 library(Places)
 library(igraph)
 library(kableExtra)
@@ -88,7 +88,7 @@ While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi
 
 This document relies on the following packages: 
 
-  * [tidyverse](https://www.tidyverse.org/): The tidyverse R package is a collection of packages that provides a cohesive framework for data manipulation, visualization, and analysis using a consistent and intuitive syntax.
+  * [dplyr](https://dplyr.tidyverse.org/): the dplyr package is a powerful and user-friendly tool for data manipulation, providing functions for filtering, selecting, mutating, summarizing, and arranging data frames in an efficient and readable manner.
   * [kableExtra](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html) is used to enhance the display of dataframes and make the data more legible. 
   * [Places](https://lereps.sciencespo-toulouse.fr/new-r-package-places-structural-equivalence-analysis-for-two-mode-networks) : A package specifically designed to find places in two-mode data. This package has been developed by Delio de Lucena (Science-Po Toulouse). 
   * [igraph](https://r.igraph.org/): A reference package for building, analyzing and visualizing networks. 
@@ -98,7 +98,7 @@ Note that visualization is not *igraph*’s main strength. Other packages like [
 
 ## Data
 
-The example data used in this tutorial was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936], [@armand_bonding_2024]. The original dataset can be downloaded from [Zenodo](https://zenodo.org/record/8047064). It is freely accessible and open for reuse. In this tutorial, we shall use a simplified version of the original dataset, which we describe below. 
+The example data used in this tutorial was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936], [@henriot_bonding_2024]. The original dataset can be downloaded from [Zenodo](https://zenodo.org/record/8047064). It is freely accessible and open for reuse. In this tutorial, we shall use a simplified version of the original dataset, which we describe below. 
 
 The dataset is typically an *edge list*^[__Edge list__: An edge list is a data structure used in network analysis to represent a graph as a list of its edges] of individuals linked to the universities they attended. It contains 682 academic curricula distributed among the 418 members of the American University Club of Shanghai. Since the individuals may have obtained several degrees from different universities, they may appear in several rows. Each row refers to a distinct curriculum.  
   
@@ -286,7 +286,7 @@ kable(n2, caption = "The 13 most significant places") %>%
 
 <br>
 
-In subsequent steps, it is recommended to carefully examine the list of places and their associated details, beginning with the most significant and progressively broadening the selection to encompass less populous places.
+In subsequent steps, it is recommended to carefully examine the list of places and their associated details, beginning with the most significant and progressively broadening the selection to encompass less populous places. It is beyond the scope of this tutorial to extensively describe the places found in this dataset, but I have contributed an in-depth research paper that demonstrates how places can be used to identify typical educational paths and track students who followed similar trajectories [@henriot_bonding_2024]. Interested readers are encouraged to consult this paper for further information.
 
 
 <div class="alert alert-danger" role="alert">
@@ -346,44 +346,31 @@ If the data includes qualitative attributes, these attributes can be used to fur
 <div class="alert alert-success" role="alert">  
 This part is not directly reproducible because it depends on the intrinsic qualities of the dataset. Nevertheless, it is worth mentioning because the rationale can be adapted to other data and research questions. The places were coded manually based on the attributes of the universities and the students they contained. For students, the attributes used were nationality, period of study, and the nature of their degree. For universities, the attribute used was the region in which they were located (East Coast, West, or Midwest).</div>
 
-While it is beyond the scope of this tutorial to detail the coding methodology used in this study, we provide the code below for extracting students and universities from each place. 
+While it is beyond the scope of this tutorial to detail the coding methodology used in this study, we provide the typology below, which was used to compute the number of places in each category as an illustration.
 
-First, we extract individual elements (students) and sets (universities) from the PlaceDetail column, using "-" as the separator and we remove special characters (-, {, }) for cleaner extraction.
 ```{r}
 
-split1 <- Result1_df %>% mutate(PlaceDetail,
-                               Student=str_extract(PlaceDetail,"[^\\}]+\\}"),
-                               University=str_extract(PlaceDetail,"\\} - \\{.*")) %>% 
-  mutate(Student = str_remove_all(Student,"\\}")) %>% 
-  mutate(Student = str_remove_all(Student,"\\{")) %>% 
-  mutate(University = str_remove_all(University,"\\} - \\{")) %>% 
-  mutate(University = str_remove_all(University,"\\}")) 
+# load data 
+library(readr)
+placetypo <- read_delim("data/placetypo.csv", 
+    delim = "\t", escape_double = FALSE, 
+    col_types = cols(...1 = col_skip()), 
+    trim_ws = TRUE)
 
-
-kable(head(split1)) %>%
+kable(head(placetypo)) %>%
   kable_styling(bootstrap_options = "striped", full_width = T, position = "left")
 
 ```
 <br>
-Next, we create one row per student by splitting places with multiple students separated by ";". We use the "separate_rows" function from the tidyverse package: 
-```{r}
-split2 <- split1 %>% separate_rows(Student, sep=";")
 
-kable(head(split2))  %>%
-  kable_styling(bootstrap_options = "striped", full_width = T, position = "left")
+We count the number of places for each type using the "group_by" and "count" functions: 
+
+```{r}
+
+placetypo %>% group_by(Type) %>% count(sort = TRUE)
 
 ```
 
-<br>
-Similarly, we create one row per university by splitting places with multiple universities separated by ";": 
-```{r}
-split3 <- split2 %>% separate_rows(University, sep=";") 
-
-kable(head(split3)) %>%
-  kable_styling(bootstrap_options = "striped", full_width = T, position = "left")
-```
-<br>
-This code can be reused to extract elements and sets from places in order to manually label places for other specific studies. 
 
 In the following section, we will demonstrate how to construct and analyze networks of places in order to investigate the structure and dynamics of two-mode networks, taking Sino-American alumni networks as a specific case. 
 
@@ -459,8 +446,6 @@ Let's plot the network of places linked by universities:
 
 ```{r}
 
-layout = layout_components
-
 plot(Net1, vertex.size = 5, 
      vertex.color = "orange", 
      vertex.label.color = "black", 
@@ -493,19 +478,25 @@ We can remove the labels to improve legibility and adjust the node sizes accordi
 ```{r}
 
 V(Net1)$size <- Result1_df$NbElements
-V(Net2)$size <- Result1_df$NbElements
 
 plot(Net1, vertex.size = V(Net1)$size, 
      vertex.color = "orange", 
      vertex.label = NA,
+     layout = layout_components,
      main="Network of places linked by universities")
 
+```
+<br>
+For the graph of universities linked by place, we can adjust the node sizes according to the number of students attending each university:  
+```{r}
+univ_count <- auc %>% group_by(University) %>% count()
+V(Net2)$size <- univ_count$n/2
 
-plot(Net2, vertex.size = Result1_df$NbElements, 
+plot(Net2, vertex.size = V(Net2)$size, 
      vertex.color = "light blue", 
      vertex.label = NA, 
+     layout = layout_components,
      main="Network of universities linked by places")
-
 ```
 
   
@@ -617,6 +608,9 @@ plot(Net2MC,
      main="Network of universities",
      sub = "The size of vertices represents their degree centrality.")
 ```
+
+<br>
+In my article [@henriot_bonding_2024], I demonstrated how centrality metrics can be utilized to categorize universities and to study the formation of university ranking based on their position in the networks. Interested readers are invited to consult this paper for further information. 
 
 <br>
 Based on this initial investigation, it is evident that the networks of Sino-American alumni exhibit significant heterogeneity, consisting of various subgroups and communities that are connected with differing degrees of density. In the upcoming section, we will delve into the application of community detection to identify subgroups of more densely connected nodes within the two networks.  
@@ -802,8 +796,10 @@ plot(gu2, vertex.label=V(Net2MC)$id,
 
 ```
 <br>
+Interested readers are invited to consult my paper [@henriot_bonding_2024] for an in-depth examination of communities and their structure. In this paper, I have demonstrated how the joint analysis of communities of places and universities can be used to examine patterns of student mobility within select groups of universities. 
+
 <div class="alert alert-success" role="alert">
-These visual observations can be corroborated by retrieving the global metrics of each community. To maintain brevity in this document, we will not undertake this process here. Interested readers are encouraged to consult the [comprehensive documentation](https://bookdown.enpchina.eu/AUC/Places3.html#Structural_analysis) produced by the author for further details. </div>  
+These visual observations can be corroborated by retrieving the global metrics of each community. To maintain brevity in this document, we will not undertake this process here. Interested readers are encouraged to consult the [comprehensive documentation](https://bookdown.enpchina.eu/AUC/Places3.html#Structural_analysis) produced by the author for further details.</div>  
 
 # From Structural Equivalence to Regular Equivalence: The *k-Places* Function
 
@@ -863,7 +859,7 @@ The 2 k-places identified contain 2 elements (students) and 3 sets (universities
 
 # Conclusion
 
-This tutorial has laid the foundations for a standard workflow based on the “Places” R package, which can be reused and adapted for other research across diverse disciplinary fields. This method can be applied to virtually any type of nodes, not only human and social actors, but also objects, concepts, and other entities. Furthermore, it can be extended to multimodal networks involving more than two different types of nodes. For example, the places could encompass not only the universities attended by the students but also their place of birth or the institutions in which they were employed. Interested readers can refer to my article [@armand_bonding_2024], which provides a detailed demonstration of the multiple possible uses of place-based networks to advance historical findings. Specifically, this article explores how the network was used to identify typical trajectories among American and Chinese alumni, examine how these educational trajectories shaped future careers and collaborations, and trace the formation of places and the emergence of university rankings over time. Ultimately, we hope this paper will inspire innovative research based on this framework. 
+This tutorial has laid the foundations for a standard workflow based on the “Places” R package, which can be reused and adapted for other research across diverse disciplinary fields. This method can be applied to virtually any type of nodes, not only human and social actors, but also objects, concepts, and other entities. Furthermore, it can be extended to multimodal networks involving more than two different types of nodes. For example, the places could encompass not only the universities attended by the students but also their place of birth or the institutions in which they were employed. Interested readers can refer to my article [@henriot_bonding_2024], which provides a detailed demonstration of the multiple possible uses of place-based networks to advance historical findings. Specifically, this article explores how the network was used to identify typical trajectories among American and Chinese alumni, examine how these educational trajectories shaped future careers and collaborations, and trace the formation of places and the emergence of university rankings over time. Ultimately, we hope this paper will inspire innovative research based on this framework. 
 
 
 <div class="alert alert-success" role="alert">
