@@ -22,7 +22,7 @@ link-citations: true
 # licence: "by-sa"
 
 # Only Creative Commons Licence 
-# 5 possible choices : "by-nd", "by", "by-nc-sa", "by-nc","by-sa"
+# 5 possible choices : "by-nd", "by", "by-nc-sa", "by-nc"
 ---
 
 ```{r setup, include=FALSE}
@@ -59,7 +59,7 @@ Two-mode networks^[__Two-mode network__: A specific kind of network that involve
 <div class="alert alert-success" role="alert"> 
 In this document, we interchangeably use the terms "vertex" (plural: "vertices") and "node(s)" to refer to the network's nodes. We alternatively employ the terms "edge(s)" and "tie(s)" to designate the network's edges.</div>
 
-Analyzing two-mode networks raises significant challenges, which have been extensively described in specialized literature [@borgatti_two-mode_2009], [@borgatti_analyzing_2011]. Three major approaches have been commonly deployed. The first approach, which applies algorithms developed for one-mode networks, disregards the unique characteristics of two-mode data and introduces biases that have been discussed in previous works [@borgatti_network_1997]. The second approach involves projecting the original two-mode network into two separate one-mode networks [@everett_dual-projection_2013]. Depending on their interest, researchers typically focus on one projection and discard the other. However, this method has been shown to result in a loss of information and the creation of artificial clustering, which can introduce biases in the interpretation of the data [@newman_random_2001], [@uzzi_collaboration_2005], [@zhou_two-mode_2007]. A third approach, implemented notably in research on interlocks since the 1970s or in ecology, and more recently in other disciplines, maintains the bimodal structure of the studied network. 
+Analyzing two-mode networks raises significant challenges, which have been extensively described in specialized literature [@borgatti_two-mode_2009], [@borgatti_analyzing_2011]. Three major approaches have been commonly deployed. The first approach, which applies algorithms developed for one-mode networks, disregards the unique characteristics of two-mode data and introduces biases that have been discussed in previous works [@borgatti_network_1997]. The second approach involves projecting the original two-mode network into two separate one-mode networks [@everett_dual-projection_2013]. Depending on their interest, researchers typically focus on one projection and discard the other. However, this method has been shown to result in a loss of information and the creation of artificial clustering, which can introduce biases in the interpretation of the data [@newman_random_2001], [@uzzi_collaboration_2005], [@zhou_bipartite_2007]. A third approach, implemented notably in research on interlocks since the 1970s or in ecology, and more recently in other disciplines, maintains the bimodal structure of the studied network. 
 
 The place-based methodology we aim to introduce in this document offers a powerful alternative to the three mainstream approaches described above, as illustrated on Figure 1. First, it allows for a reduction of the network without sacrificing information. Second, it maintains the inherent duality property found in two-mode networks [@field_identifying_2006]. 
 
@@ -243,10 +243,10 @@ ggplot(Result1_df, aes(x = NbElements)) +
 <br>
 Explanation: 
 
-  * ggplot(Result1_df, aes(x = NbElements)): This initializes the ggplot object, specifying the data frame (Result1_df) and the aesthetic mapping (x = NbElements).
-  * geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7): This adds the histogram layer to the plot. binwidth sets the width of the bins, fill and color set the fill and border colors, and alpha controls the transparency.
-  * labs(title = "Students by place", x = "Number of Elements on X-axis", y = "Frequency"): This sets the title and axis labels.
-  * theme_minimal(): This applies a minimal theme to the plot, but you can customize the theme based on your preferences.
+  * **ggplot(Result1_df, aes(x = NbElements))**: This initializes the ggplot object, specifying the data frame (Result1_df) and the aesthetic mapping (x = NbElements).
+  * **geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7)**: This adds the histogram layer to the plot. binwidth sets the width of the bins, fill and color set the fill and border colors, and alpha controls the transparency.
+  * **labs(title = "Students by place", x = "Number of Elements on X-axis", y = "Frequency")**: This sets the title and axis labels.
+  * **theme_minimal()**: This applies a minimal theme to the plot, but you can customize the theme based on your preferences.
 
 The table and histogram below reveal that most places (179, or 80%) consist of unique trajectories centered on a single student. These places are perfectly aligned with individual students. This is an intriguing finding in itself. It suggests something significant about the structure of the network, which can be attributed by historical circumstances. Specifically, the prevalence of these idiosyncratic places reflects the widespread adoption of the elective system in American higher education institutions during the late 19th century.
 
@@ -303,50 +303,48 @@ If the data includes qualitative attributes, these attributes can be used to fur
   overflow:hidden;padding:10px 5px;word-break:normal;}
 .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
   font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-.tg .tg-baqh{text-align:center;vertical-align:top}
-.tg .tg-hfh6{font-family:Tahoma, Geneva, sans-serif !important;font-weight:bold;text-align:center;vertical-align:bottom}
-.tg .tg-rlus{font-family:Tahoma, Geneva, sans-serif !important;font-weight:bold;text-align:center;vertical-align:top}
-.tg .tg-x6gk{font-family:Tahoma, Geneva, sans-serif !important;font-weight:bold;text-align:left;vertical-align:bottom}
-.tg .tg-7zrl{text-align:left;vertical-align:bottom}
-.tg .tg-egt2{font-family:Tahoma, Geneva, sans-serif !important;font-weight:bold;text-align:left;vertical-align:top}
-.tg .tg-8d8j{text-align:center;vertical-align:bottom}
+.tg .tg-2vf8{background-color:#FFF;color:#404040;font-family:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-homa{background-color:#FFF;font-family:inherit;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-59kb{background-color:#FFF;color:#404040;font-family:inherit;text-align:center;vertical-align:top}
+.tg .tg-h04j{background-color:#F3F6F6;color:#404040;font-family:inherit;font-weight:bold;text-align:left;vertical-align:bottom}
+.tg .tg-i610{background-color:#F3F6F6;color:#404040;font-family:inherit;text-align:center;vertical-align:top}
 </style>
-<table class="tg" style="undefined;table-layout: fixed; width: 719px">
-<colgroup>
-<col style="width: 175px">
-<col style="width: 286px">
-<col style="width: 258px">
-</colgroup>
-<thead>
+<table class="tg"><thead>
   <tr>
-    <th class="tg-rlus">Period of study</th>
-    <th class="tg-hfh6">SAME TIME</th>
-    <th class="tg-hfh6">DIFFERENT TIME</th>
-  </tr>
-</thead>
+    <th class="tg-homa"></th>
+    <th class="tg-homa"><span style="font-weight:bold;background-color:white">SAME TIME</span></th>
+    <th class="tg-homa"><span style="font-weight:bold;background-color:white">DIFFERENT TIME</span></th>
+  </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-x6gk">Field of study</td>
-    <td class="tg-7zrl"></td>
-    <td class="tg-7zrl"></td>
+    <td class="tg-2vf8"><span style="font-weight:bold">SAME DISCIPLINE</span></td>
+    <td class="tg-59kb">TYPE A : Strong potential for regular interaction (4 places, 9%)</td>
+    <td class="tg-59kb">TYPE C : Potential for later collaboration (7 places, 16%)</td>
   </tr>
   <tr>
-    <td class="tg-egt2">SAME DISCIPLINE</td>
-    <td class="tg-baqh">TYPE A : Strong potential for regular interaction (4 places, 9%)   </td>
-    <td class="tg-baqh">TYPE C : Potential for later collaboration (7 places, 16%) </td>
-  </tr>
-  <tr>
-    <td class="tg-x6gk">DIFFERENT DISCIPLINE</td>
-    <td class="tg-8d8j">TYPE B: Potential for extra-curricula interaction (8 places, 18%) </td>
-    <td class="tg-8d8j">TYPE D : Shared academic experience and cultural background (25 places, 32%)</td>
+    <td class="tg-h04j"><span style="font-weight:bold">DIFFERENT DISCIPLINE</span></td>
+    <td class="tg-i610">TYPE B: Potential for extra-curricula interaction (8 places, 18%)</td>
+    <td class="tg-i610">TYPE D : Shared academic experience and cultural background (25 places, 32%)</td>
   </tr>
 </tbody>
 </table>
 
-<div class="alert alert-success" role="alert">  
-This part is not directly reproducible because it depends on the intrinsic qualities of the dataset. Nevertheless, it is worth mentioning because the rationale can be adapted to other data and research questions. The places were coded manually based on the attributes of the universities and the students they contained. For students, the attributes used were nationality, period of study, and the nature of their degree. For universities, the attribute used was the region in which they were located (East Coast, West, or Midwest).</div>
 
-While it is beyond the scope of this tutorial to detail the coding methodology used in this study, we provide the typology below, which was used to compute the number of places in each category as an illustration.
+<br>
+**Type A** places represent the strongest potential for direct interaction, as they involve students who enrolled in the same programs at the same time, likely attending the same classes. In our population, there are four places of this type, all featuring students in sciences or engineering who graduated during or after World War I (P032, P033, P037, P173). 
+<br>
+**Type B** places are characterized by potential interactions outside the classroom setting. While students in these places may not have enrolled in the same courses, their paths could have crossed on campus through various extracurricular activities. An illustrative example of a Type B place is represented by physician Yan Fuqing (顔福慶) (Yen Fu-ching) and businessman Cao Maoxiang (曹蝥祥) (Y.S. Tsao), who attended Yale and Harvard between 1909 and 1914 (P038). 
+<br>
+**Type C** places refer to students who attended the same universities and graduated in the same disciplines but at different periods of time. Although these students did not have the opportunity to physically interact on campus, their shared educational background created a potential for future collaborations and intergenerational connections. For instance, economist Ma Yinchu (馬寅初) graduated from Yale and Columbia in 1910–1914, a decade before banker Lin Zhang (林障) completed his studies at the same institutions in 1920–1922 (P34).
+<br>
+**Type D** places represent the weakest form of association, bringing together students from different generations who pursued diverse academic disciplines at the same alma mater. For instance, place P161 exemplifies a Type D place where three graduates from Stanford University, spanning a period between 1905 and 1922, pursued distinct fields of study ranging from engineering to the humanities. These multigenerational and multidisciplinary places encompass a significant number of students, often exceeding ten individuals, who share a common educational institution.
+<br>
+Interested readers are encouraged to refer to our comprehensive research paper [@henriot_bonding_2024], which offers an in-depth analysis of the different types of places.
+
+<div class="alert alert-success" role="alert">  
+This part is not directly reproducible because it depends on the intrinsic qualities of the dataset. Nevertheless, it is worth mentioning because the rationale can be adapted to other data and research questions. The places were manually coded based on the attributes of the universities and the students they encompassed. For students, the attributes considered were nationality, period of study, and the nature of their degree. For universities, the coding was based on the region in which they were located (East Coast, West, or Midwest).</div>
+
+While it is beyond the scope of this study to detail the methodology used for classifying places, we provide the typology below as an illustration, used to compute the number of places in each category. We hope this case study inspires other researchers to create their own typology of places, tailored to their research questions and data attributes: 
 
 ```{r}
 
@@ -487,7 +485,7 @@ plot(Net1, vertex.size = V(Net1)$size,
 
 ```
 <br>
-For the graph of universities linked by place, we can adjust the node sizes according to the number of students attending each university:  
+For the graph of universities linked by places, we can adjust the node sizes according to the number of students attending each university:  
 ```{r}
 univ_count <- auc %>% group_by(University) %>% count()
 V(Net2)$size <- univ_count$n/2
@@ -500,7 +498,7 @@ plot(Net2, vertex.size = V(Net2)$size,
 ```
 
   
-As evident from the graphs, the two networks are each made up of a large, densely connected component surrounded by a myriad of isolated nodes and smaller components, which refer to the singular curricula described in the previous section. To substantiate this preliminary visual exploration, it is crucial to turn to network metrics. 
+As evident from the graphs, the two networks are each made up of a large, densely connected component surrounded by a myriad of isolated nodes and smaller components, which refer to the singular curricula described in the previous section. To substantiate this preliminary visual exploration, it is recommended to turn to network metrics. 
 
 ## Applying One-Mode Network Metrics to Places and Sets
 
@@ -564,9 +562,9 @@ The results indicate that the most frequent circulations occurred between Columb
 
 There are many metrics to measure the relative position of vertices in networks. In the following, we focus on the most popular centrality metrics, which can all be computed with the *igraph* package: 
 
-  * **Degree**: the number of ties a node has. It is the simplest measure of centrality. In the following, we use a normalized version of the measure in order enable comparisons across networks built from different data structure. Since the projected networks are valued, it is also possible to calculate a weighted degree based on the intensity of the links. In the network of universities linked by places, for example, it measures the number of connections or ties each university has with other universities in the network. It can be interpreted as a measure of university popularity or the extent to which a university is actively connected to other institutions.
-  * **Eigenvector**: the number of connections a node has to other well-connected nodes. It is a measure of the influence of a node in a network. In the network of universities, it quantifies the extent to which a university is connected to other influential universities in the network. Universities with high eigenvector centrality are connected to other highly influential institutions, indicating their own influence and prestige.
-  * **Betweenness**: the number of times a node acts as a bridge along the shortest path between two other nodes. In this sense, the more central a node is, the greater control it has over the flows that goes through it. It is often considered as a measure of brokerage, or the capacity of a node to mediate between other nodes. Betweenness centrality is a common metrics, but in the context of projecting a bimodal network, its interpretation becomes more challenging. In the network of universities linked by places, it quantifies the university’s brokering power or the frequency with which it falls on the shortest path between other universities. Universities with high betweenness centrality play a crucial role in connecting different parts of the network and facilitating communication and collaboration between institutions. 
+  * **Degree**: the number of ties a node has. It is the simplest measure of centrality. In the following, we use a normalized version of the measure in order enable comparisons across networks built from different data structure. Since the projected networks are valued, it is also possible to calculate a weighted degree based on the intensity of the links. In the network of universities linked by places, for example, it measures the number of connections or ties (e.g., places) each university has with other universities in the network. It can be interpreted as a measure of university popularity or the extent to which a university is actively connected to other institutions.
+  * **Eigenvector**: the number of connections a node has to other well-connected nodes. It is a measure of the influence of a node in a network. In the network of universities, it quantifies the extent to which a university is connected to other influential universities. Universities with high eigenvector centrality are connected to other highly influential institutions, indicating their own influence and prestige.
+  * **Betweenness**: the number of times a node acts as a bridge along the shortest path between two other nodes. In this sense, the more central a node is, the greater control it has over the flows that goes through it. It is often considered as a measure of brokerage, or the capacity of a node to mediate between other nodes. In the network of universities linked by places, it quantifies the university’s brokering power or the frequency with which it falls on the shortest path between other universities. Universities with high betweenness centrality play a crucial role in connecting different parts of the network and facilitating students' exchanges between institutions. 
   * **Closeness**: the average length of the shortest path between the node and all other nodes in the graph. In this sense, the more central a node is, the closer it is to all other nodes. It measures how quickly influence can spread from one university to another through direct or indirect connections. Universities with high closeness centrality are considered central in terms of being well-connected and easily reachable within the network. This is particularly relevant in the subnetwork of specialized institutions, such as the Massachusetts Institute of Technology.
 
 
@@ -674,7 +672,7 @@ plot(lvc1, Net1MC, vertex.label=NA,
 <br>
 On the clustered graph, black ties connect vertices within each group, whereas red ties link vertices across different communities. 
 
-### Network of Universities 
+### Network of Sets (Universities)
 
 Similarly, we create a group for each community of universities and we set a different color for each group:  
 ```{r}
@@ -758,7 +756,11 @@ To illustrate the duality of place-based networks, we will plot the correspondin
 
 ## Visual Comparisons
 
-As an example, we will compare the Columbia-centered community and the corresponding community of places: 
+Using this method, three main categories of communities can be identified based on their topological structure:
+
+**a. Star-like communities** are characterized by a prominent and highly influential university that attracts students from a wide range of smaller institutions. Columbia University serves as a prime example, having developed into a comprehensive institution with diverse academic offerings and exceptional resources for postgraduate research. Its reputation and extensive curriculum make it an attractive destination for students seeking a broad educational experience.
+
+The two plots below compare the Columbia-centered community and the corresponding community of places. The hairball structure of the community of places is transposed into the star-like structure of the community of universities: 
 ```{r}
 plot(gp1, vertex.label=V(Net1MC)$id,
      vertex.label.color = "black", 
@@ -775,9 +777,8 @@ plot(gu1, vertex.label=V(Net2MC)$id,
      main="Columbia community (universities)")
 ```
 <br>
-The hairball structure of the community of places is transposed into the star-like structure of the community of universities. 
 
-The Princeton community presents a different, chain-type structure: 
+**b. Chain-type communities** can be observed in two scenarios. First, in specialized curricula like engineering and technical studies, institutions such as MIT and Purdue University form chains where student mobility is limited due to the specialized nature of their programs. Second, in cases when American students are dispersed across numerous peripheral institutions with little curricular coherence, chain structures also emerge, as illustrated by the Princeton community below: 
 ```{r}
 plot(gp2, vertex.label=V(Net1MC)$id,
      vertex.label.color = "black", 
@@ -796,7 +797,28 @@ plot(gu2, vertex.label=V(Net2MC)$id,
 
 ```
 <br>
-Interested readers are invited to consult my paper [@henriot_bonding_2024] for an in-depth examination of communities and their structure. In this paper, I have demonstrated how the joint analysis of communities of places and universities can be used to examine patterns of student mobility within select groups of universities. 
+
+**c. Hybrid structures** consist of two equally central institutions that have established their own networks of feeder colleges. These institutions not only exchange students but also complement or compete in terms of program offerings. For example, Cornell and the University of California attracted students who navigated between the two due to their strong programs in science, engineering, and agriculture: 
+
+```{r}
+plot(gp5, vertex.label=V(Net1MC)$id,
+     vertex.label.color = "black", 
+     vertex.label.cex = 0.5, 
+     vertex.size= 5,
+     main="Cornell Community (places)")
+```
+
+```{r}
+
+plot(gu6, vertex.label=V(Net2MC)$id,
+     vertex.label.color = "black", 
+     vertex.label.cex = degree(gu6)*0.3, 
+     vertex.size= degree(gu6)*2, # node size proportionate to node degree (in cluster)
+     main="Cornell community (universities)")
+
+```
+
+For an in-depth analysis of university and place-based communities, please refer to my aforementioned paper [@henriot_bonding_2024]. In this paper, I have demonstrated how the joint analysis of communities of places and universities can be used to examine patterns of student mobility within select groups of universities. 
 
 <div class="alert alert-success" role="alert">
 These visual observations can be corroborated by retrieving the global metrics of each community. To maintain brevity in this document, we will not undertake this process here. Interested readers are encouraged to consult the [comprehensive documentation](https://bookdown.enpchina.eu/AUC/Places3.html#Structural_analysis) produced by the author for further details.</div>  
@@ -906,7 +928,7 @@ rref <- bibentry(
    keywords ="FOS: Other social sciences",
    language = "fr",
    publisher = "FR2007 CIST",
-   year = 2023,
+   year = 2024,
    copyright = "Creative Commons Attribution Share Alike 4.0 International")
 
 ``` 
