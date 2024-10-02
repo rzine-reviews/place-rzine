@@ -82,7 +82,7 @@ The concept of places is particularly relevant under the following conditions:
 
 The last two conditions are not strictly necessary, but they significantly facilitate the initial interpretation of places.</div>
 
-While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi](https://gephi.org/) do not provide built-in functions for place-based analysis, researchers can resort to the [Places](https://lereps.sciencespo-toulouse.fr/new-r-package-places-structural-equivalence-analysis-for-two-mode-networks) R package developed by Delio de Lucena at Science-Po Toulouse. To the best of our knowledge, this package is the only available library that enables place detection and analysis.   
+While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi](https://gephi.org/) do not provide built-in functions for place-based analysis, researchers can resort to the [Places](https://lereps.sciencespo-toulouse.fr/new-r-package-places-structural-equivalence-analysis-for-two-mode-networks) R package developed by Delio de Lucena at Science-Po Toulouse. Although there are alternative approaches for addressing structural equivalence in R (such as [netdiffuseR](https://search.r-project.org/CRAN/refmans/netdiffuseR/html/struct_equiv.html) and [concoR](https://rstudio-pubs-static.s3.amazonaws.com/436072_01fce54f3c25458381fee52ec65396fc.html)), the "Places" package is the only available library that specifically focuses on the detection and analysis of 'places. 
 
 ## Packages
 
@@ -94,7 +94,7 @@ This document relies on the following packages:
   * [igraph](https://r.igraph.org/): A reference package for building, analyzing and visualizing networks. 
 
 <div class="alert alert-success" role="alert">  
-Note that visualization is not *igraph*’s main strength. Other packages like [tidygraph](https://tidygraph.data-imaginist.com/) and [networkD3](https://christophergandrud.github.io/networkD3/) can be utilized for improving visual aspects, but this is not the core focus of this tutorial. Additionnally, it is recommended to export the edge lists for further exploration with network analysis software such as [Gephi](https://gephi.org/) or [Cytoscape](https://cytoscape.org/), which enable greater interactivity.</div> 
+Note that visualization is not *igraph*’s main strength. Other packages like [tidygraph](https://tidygraph.data-imaginist.com/) and [networkD3](https://christophergandrud.github.io/networkD3/) can be utilized for improving visual aspects, but this is not the core focus of this tutorial. Additionnally, it may be helpful to export the edge lists for further exploration with network analysis software such as [Gephi](https://gephi.org/) or [Cytoscape](https://cytoscape.org/), which enable greater interactivity.</div> 
 
 ## Data
 
@@ -269,11 +269,11 @@ ggplot(Result1_df, aes(x = NbSets)) +
 ```
 
 <br>
-Most places contain a maximum of two universities, meaning that the majority of students attended a maximum of two different universities. This suggests that many students were relatively during their studies and transferred to a different institution to complete their training. Fewer students (25) attended more than two universities during their studies. More specifically, 21 students attended 3 and 4 students attended 4 different universities.  
+Most places contain a maximum of two universities, meaning that the majority of students attended a maximum of two different universities. This suggests that many students were relatively mobile during their studies and transferred to a different institution to complete their training. Fewer students (25 places) attended more than two universities during their studies. More specifically, 21 places involved students who attended 3 and 4 places involved students who attended 4 different universities.  
 
 ## Most significant places 
 
-Beyond crude statistics, we want to know more about the students and the universities which define each place. The "Place Detail" column provides such information. Since it would be time-consuming to examine the 223 places one by one, we can start by focusing on the most significant places which include a minimum of 2 students and 2 colleges. Using the *filter()* function, 13 such places are found: 
+Beyond crude statistics, we want to gain deeper insights into the students and universities that define each place. The "Place Detail" column provides this information. Since examining all 223 places individually would be time-consuming, we can start by focusing on the most populated places, which include a minimum of 2 students and 2 colleges. In this approach, we choose to discard idiosyncratic places that involve only one student or unique curricula. Using the *filter()* function, 13 such places are found: 
 
 ```{r}
 
@@ -388,10 +388,10 @@ diag(PlacesMatrix)<-0
 
 ```
 <br>
-In essence, the chunk above is creating a two-mode network representation using a contingency table (bimod) and then computing the cross-product of this bimodal matrix with its transpose to create a square matrix (PlacesMatrix). Finally, it sets the diagonal elements of this matrix to 0. The resulting matrix may be used for analyzing relationships or patterns between Places and Sets in the context of the data stored in Result1$Edgelist. Below, we provide a detailed explanation of the code line by line: 
+In essence, the chunk above is creating a two-mode network representation using a contingency table (bimod) and then computing the cross-product of this bimodal matrix with its transpose to create a square matrix (PlacesMatrix). Finally, it sets the diagonal elements of this matrix to 0. The resulting matrix may be used for analyzing relationships or patterns between Places and Sets in the context of the data stored in `Result1$Edgelist`. Below, we provide a detailed explanation of the code line by line: 
 
-  * `table(Result1$Edgelist$Places, Result1$Edgelist$Set)`: This line uses the table function to create a contingency table (cross-tabulation) of the occurrences of each combination of values in the vectors Result1$Edgelist$Places and Result1$Edgelist$Set. The result, assigned to the variable bimod, is a two-dimensional table.
-  * `bimod %*% t(bimod)`: This line performs matrix multiplication. The %*% operator is used for matrix multiplication, and t(bimod) transposes the matrix bimod. The result is a matrix called PlacesMatrix that represents the cross-product of bimod and its transpose.
+  * `table(Result1$Edgelist$Places, Result1$Edgelist$Set)`: This line uses the table function to create a contingency table (cross-tabulation) of the occurrences of each combination of values in the vectors `Result1$Edgelist$Places` and `Result1$Edgelist$Set`. The result, assigned to the variable bimod, is a two-dimensional table.
+  * `bimod %*% t(bimod)`: This line performs matrix multiplication. The `%*%` operator is used for matrix multiplication, and *t(bimod)* transposes the matrix *bimod*. The result is a matrix called *PlacesMatrix* that represents the cross-product of *bimod* and its transpose.
 
 Next, we use the *graph_from_adjacency_matrix* function included in the *igraph* package to transform the matrix into a network of places linked by universities (Net1):
 
@@ -519,7 +519,7 @@ summary(Net1)
 summary(Net2)
 ```
 <br>
-In both cases, the summary indicates that the two networks are undirected (U), named (N), weighted (W) networks (UNW), which are the options chosen during the transformation. The network of places linked by universities (Net1) contains 223 vertices (places) and 1606 ties (universities). The network of universities linked by places includes 146 vertices (universities) and 197 ties (places). The name of vertices is the only attribute.   
+In both cases, the summary indicates that the two networks are undirected (U), named (N), weighted (W) networks (UNW), which are the options chosen during the transformation. The network of places linked by universities (Net1) contains 223 vertices (places) and 1606 ties (sets of universities). The network of universities linked by places includes 146 vertices (sets of universities) and 197 ties (places). The name of vertices is the only attribute.   
 
 ```{r}
 graph.density(Net1)
@@ -547,7 +547,7 @@ table(E(Net1)$weight)
 table(E(Net2)$weight)
 ```
 <br>
-The network of places includes a majority of simple ties (1594) and 12 ties with a weight equal to 2. These 12 ties refer to pairs of places (academic trajectories) which share 2 sets (universities). The network of universities also include a majority of simple ties (190), as well as 6 ties of weight 2 (6 pairs of universities sharing 2 places) and one tie of weight 4 (one pair of university which share 4 places).
+The network of places consists mostly of simple ties (1,594) and 12 ties with a weight of 2. These 12 ties represent pairs of places that share 2 sets (i.e., 2 two different combinations of universities). Similarly, the network of universities also consists primarily of simple ties (190), along with 6 ties of weight 2 (6 pairs of universities sharing 2 places) and one tie of weight 4 (one pair of universities sharing 4 places).
 
 Let's find out what are these most significant pairs by filtering the ties whose weight is superior to 1:  
 ```{r}
@@ -840,7 +840,7 @@ Result2 <- kplaces(data = auc, col.elements = "Name", col.sets = "University", k
 Result2 <- kplaces(auc, "Name", "University", 1) # shorter version, same results
 ```
 <br>
-From the initial edge list of 418 students and 145 universities, 219 places and 2 k-places (or "ambiguous cases") were found. 
+From the initial edge list of 418 students and 146 universities, 219 places and 2 k-places (or "ambiguous cases") were found. 
   
 The *k-places()* function returns a list with four data frames: 
 
@@ -876,7 +876,7 @@ kable(Result2k_df, caption = "Kplaces, corresponding places and common sets") %>
 <br>
 The 2 k-places identified contain 2 elements (students) and 3 sets (universities). They have 2 sets in common and one difference: 
 
-  * P007*(2-3-2-1) includes F. Sec Fong and Edward Y.K. Kwong who both attended Columbia University and Pomona College. They differ in that Fong F. Sec also attended the University of California, whereas Edward Y.K. Kwong did not.
+  * P007*(2-3-2-1) includes F. Sec Fong and Edward Y.K. Kwong who both attended Columbia University and Pomona College. They differ in that Fong F. Sec also attended the University of California, whereas Edward Y.K. Kwong did not. (The differences can be viewed by consulting the "Place Detail" column in the previous table.)
   * P017*(2-3-2-1) includes H.C.E. Liu and Jui-Ching Hsia who both attended the University of Chicago and Columbia University. Additionally, H.C.E. Liu studied at Denison University, whereas Jui-Ching Hsia did not.
 
 # Conclusion
