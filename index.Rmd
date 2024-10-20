@@ -19,7 +19,7 @@ link-citations: true
 # github: "author/repository"
 # gitlab: "gitlab.huma-num.fr/author/repository"
 # doi: "xx.xxx/xxxx.xxxxxxx"
-# licence: "by-sa"
+licence: "by-sa"
 
 # Only Creative Commons Licence 
 # 5 possible choices : "by-nd", "by", "by-nc-sa", "by-nc"
@@ -46,7 +46,7 @@ library(kableExtra)
 ```
 
 
-> Abstract: This document presents an effective approach for handling two-mode networks, utilizing the concept of 'place' or structural equivalence as its fundamental framework. It primarily relies on the **Places** and **igraph** R packages. To illustrate this method, it employs an edge list representing students and their respective universities in the United States. The data source for this analysis is derived from the directory of an alumni club, specifically the American University Club of Shanghai, which was originally published in 1936. The document proceeds through four main steps: (1) identification of places from the edge list, (2) transformation of the list of places into a network of places, along with its transposed network of universities, (3) visualization and analysis of the network, including community detection, and (4) the introduction of a more flexible approach grounded in the concepts of regular equivalence or k-places. 
+> Abstract: This paper presents an effective approach for handling two-mode networks, utilizing the concept of 'place' or structural equivalence as its fundamental framework. It primarily relies on the **Places** and **igraph** R packages. To illustrate this method, it employs an edge list representing students and their respective universities in the United States. The data source for this analysis is derived from the directory of an alumni club, specifically the American University Club of Shanghai, which was originally published in 1936. The paper proceeds through four main steps: (1) identification of places from the edge list, (2) transformation of the list of places into a network of places, along with its transposed network of universities, (3) visualization and analysis of the network, including community detection, and (4) the introduction of a more flexible approach grounded in the concepts of regular equivalence or k-places. 
 
 > Prerequisites: Basic notions of network analysis and the **tidyverse** suite.
 
@@ -57,11 +57,11 @@ library(kableExtra)
 Two-mode networks^[__Two-mode network__: A specific kind of network that involves two different types of nodes, such as persons and organizations. Such networks are also refer to as affiliation networks or two-mode graphs.], i.e. networks that involve two different types of nodes, such as persons and organizations, represent a significant proportion of network analysis research in the humanities and social sciences. Indeed, it is not always possible to gather first-hand data on direct relationships, such as friendship or family ties. In many situations, social relations are mediated by a third party or have to be inferred from indirect ties, such as school attendance, co-participation in events, membership in clubs or corporate boards.
 
 <div class="alert alert-success" role="alert"> 
-In this document, we interchangeably use the terms "vertex" (plural: "vertices") and "node(s)" to refer to the network's nodes. We alternatively employ the terms "edge(s)" and "tie(s)" to designate the network's edges.</div>
+In this paper, we interchangeably use the terms "vertex" (plural: "vertices") and "node(s)" to refer to the network's nodes. We alternatively employ the terms "edge(s)" and "tie(s)" to designate the network's edges.</div>
 
 Analyzing two-mode networks raises significant challenges, which have been extensively described in specialized literature [@borgatti_two-mode_2009], [@borgatti_analyzing_2011]. Three major approaches have been commonly deployed. The first approach, which applies algorithms developed for one-mode networks, disregards the unique characteristics of two-mode data and introduces biases that have been discussed in previous works [@borgatti_network_1997]. The second approach involves projecting the original two-mode network into two separate one-mode networks [@everett_dual-projection_2013]. Depending on their interest, researchers typically focus on one projection and discard the other. However, this method has been shown to result in a loss of information and the creation of artificial clustering, which can introduce biases in the interpretation of the data [@newman_random_2001], [@uzzi_collaboration_2005], [@zhou_bipartite_2007]. A third approach, implemented notably in research on interlocks since the 1970s or in ecology, and more recently in other disciplines, maintains the bimodal structure of the studied network. 
 
-The place-based methodology we aim to introduce in this document offers a powerful alternative to the three mainstream approaches described above, as illustrated on Figure 1. First, it allows for a reduction of the network without sacrificing information. Second, it maintains the inherent duality property found in two-mode networks [@field_identifying_2006]. 
+The place-based methodology we aim to introduce in this paper offers a powerful alternative to the three mainstream approaches described above, as illustrated on Figure 1. First, it allows for a reduction of the network without sacrificing information. Second, it maintains the inherent duality property found in two-mode networks [@field_identifying_2006]. 
 
 ```{r fig-1, echo=FALSE, out.width="100%",  fig.align = 'center', fig.cap= "Figure 1 - The place-based methodology"}
 knitr::include_graphics("figures/fig.1.png")
@@ -86,7 +86,7 @@ While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi
 
 ## Packages
 
-This document relies on the following packages: 
+This paper relies on the following packages: 
 
   * [dplyr](https://dplyr.tidyverse.org/): is a powerful and user-friendly tool for data manipulation, providing functions for filtering, selecting, mutating, summarizing, and arranging data frames in an efficient and readable manner.
   * [kableExtra](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html) is used to enhance the display of dataframes and make the data more legible.
@@ -98,7 +98,7 @@ Note that visualization is not **igraph**’s main strength. Other packages such
 
 ## Data
 
-The example data used in this paper was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936], [@henriot_bonding_2024]. The original dataset can be downloaded from [Zenodo](https://zenodo.org/record/8047064). It is freely accessible and open for reuse. In this paper, we shall use a simplified version of the original dataset, which we describe below. 
+The example data used in this paper was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936], [@henriot_bonding_2024]. The original dataset can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.8047064). It is freely accessible and open for reuse. In this paper, we shall use a simplified version of the original dataset, which we describe below. 
 
 The dataset is typically an *edge list*^[__Edge list__: An edge list is a data structure used in network analysis to represent a graph as a list of its edges] of individuals linked to the universities they attended. It contains 682 academic curricula distributed among the 418 members of the American University Club of Shanghai. Since the individuals may have obtained several degrees from different universities, they may appear in several rows. Each row refers to a distinct curriculum.  
   
@@ -611,10 +611,10 @@ Based on this initial investigation, it is evident that the networks of Sino-Ame
 
 The purpose of this section is twofold. Substantively, to understand how academic communities took shape through the interconnection of students’ trajectories (the reader can transpose the concepts of place and community to his own data and research questions). Methodologically, to illustrate the duality of place-based networks and to demonstrate the value of jointly analyzing the network of places (elements) and its transposed network of universities (sets). 
   
-The **igraph** package offers [various methods](https://igraph.org/r/doc/communities.html) for detecting communities. In this document, we selected the Louvain algorithm [@blondel_fast_2008], one of the most popular methods for finding communities, especially but not exclusively in large networks.   
+The **igraph** package offers [various methods](https://igraph.org/r/doc/communities.html) for detecting communities. In this paper, we selected the Louvain algorithm [@blondel_fast_2008], one of the most popular methods for finding communities, especially but not exclusively in large networks.   
 
 <div class="alert alert-success" role="alert"> 
-To keep this document simple, we opted to concentrate on the initial outcome of the Louvain algorithm. Nevertheless, it is advisable to examine and contrast various algorithms and multiple iterations of the same algorithm. These variations can potentially yield distinct results, which might significantly influence the ultimate conclusions.</div>
+To keep this paper simple, we opted to concentrate on the initial outcome of the Louvain algorithm. Nevertheless, it is advisable to examine and contrast various algorithms and multiple iterations of the same algorithm. These variations can potentially yield distinct results, which might significantly influence the ultimate conclusions.</div>
 
 ## Finding Communities 
 
@@ -914,7 +914,7 @@ $(document).ready(function() {
 
 # Annexes {-}
 
-## Info session  {-}
+## Info session de l'édition  {-}
 
 ```{r session_info, echo=FALSE}
 kableExtra::kable_styling(knitr::kable(rzine::sessionRzine()[[1]], row.names = F))
