@@ -39,7 +39,7 @@ knitr::opts_chunk$set(echo=TRUE,
 
 
 library(dplyr)
-library(Places)
+#library(Places)
 library(igraph)
 library(kableExtra)
 
@@ -82,7 +82,7 @@ The concept of places is particularly relevant under the following conditions:
 
 The last two conditions are not strictly necessary, but they significantly facilitate the initial interpretation of places.</div>
 
-While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi](https://gephi.org/) do not provide built-in functions for place-based analysis, researchers can resort to the [Places](https://lereps.sciencespo-toulouse.fr/new-r-package-places-structural-equivalence-analysis-for-two-mode-networks) R package developed by Delio Lucena at Science-Po Toulouse. Although there are alternative approaches for addressing structural equivalence in R (such as [netdiffuseR](https://search.r-project.org/CRAN/refmans/netdiffuseR/html/struct_equiv.html) and [concoR](https://rstudio-pubs-static.s3.amazonaws.com/436072_01fce54f3c25458381fee52ec65396fc.html)), the **Places** package is the only available package that specifically focuses on the detection and analysis of places. 
+While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi](https://gephi.org/) do not provide built-in functions for place-based analysis, researchers can resort to the [Places](https://doi.org/10.5281/zenodo.13959942) R package developed by Delio Lucena-Piquero at Science-Po Toulouse. Although there are alternative approaches for addressing structural equivalence in R (such as [netdiffuseR](https://search.r-project.org/CRAN/refmans/netdiffuseR/html/struct_equiv.html) and [concoR](https://rstudio-pubs-static.s3.amazonaws.com/436072_01fce54f3c25458381fee52ec65396fc.html)), the **Places** package is the only available package that specifically focuses on the detection and analysis of places. 
 
 ## Packages
 
@@ -90,7 +90,7 @@ This paper relies on the following packages:
 
   * [dplyr](https://dplyr.tidyverse.org/): is a powerful and user-friendly tool for data manipulation, providing functions for filtering, selecting, mutating, summarizing, and arranging data frames in an efficient and readable manner.
   * [kableExtra](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html) is used to enhance the display of dataframes and make the data more legible.
-  * [Places](https://lereps.sciencespo-toulouse.fr/new-r-package-places-structural-equivalence-analysis-for-two-mode-networks): a package specifically designed to find places in two-mode data. This package has been developed by Delio Lucena (Science-Po Toulouse). 
+  * [Places](https://doi.org/10.5281/zenodo.13959942): a package specifically designed to find places in two-mode data. This package has been developed by Delio Lucena-Piquero (Science-Po Toulouse). 
   * [igraph](https://r.igraph.org/): a reference package for building, analyzing and visualizing networks. 
 
 <div class="alert alert-success" role="alert">  
@@ -155,9 +155,9 @@ knitr::include_graphics("figures/fig.2.png")
 
 The first section aims at detecting and analyzing places from the dataset of students and universities. 
 
-The initial step is to install the **Places** package from the author's repository: 
+The initial step is to install the **Places** package from [Zenodo](https://doi.org/10.5281/zenodo.13959943): 
 ```{r warning = FALSE, message = FALSE}
-install.packages("http://lereps.sciencespo-toulouse.fr/IMG/gz/places_0.2.3.tar.gz", repos = NULL, type = "source")
+install.packages("https://zenodo.org/records/13959943/files/places_0.2.3.tar.gz", repos = NULL, type = "source")
 library(Places)
 ```
 
@@ -894,7 +894,7 @@ This paper has laid the foundations for a standard workflow based on the **Place
 The curious reader can refer to the extensive documentation produced by the author on [place detection](https://bookdown.enpchina.eu/AUC/Places1.html), [network projection](https://bookdown.enpchina.eu/AUC/Places2.html), [community detection](https://bookdown.enpchina.eu/AUC/Places3.html), and [place formation over time](https://bookdown.enpchina.eu/AUC/Places4.html). </div> 
 
 <div class="alert alert-success" role="alert">
-**Acknowledgments**: I am grateful to Delio Lucena, the creator of the **Places** package, for his assistance and valuable suggestions for improving the documentation mentioned above. I extend my thanks to Prof. Jiang Jie (Shanghai University) for providing me with a digital copy of the original source book from which the example dataset was created. </div>
+**Acknowledgments**: I am grateful to Delio Lucena-Piquero, the creator of the **Places** package, for his assistance and valuable suggestions for improving the documentation mentioned above. I extend my thanks to Prof. Jiang Jie (Shanghai University) for providing me with a digital copy of the original source book from which the example dataset was created. </div>
 
 
 # Bibliography {-}
