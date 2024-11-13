@@ -46,7 +46,7 @@ library(kableExtra)
 ```
 
 
-> Abstract: This paper presents an effective approach for handling two-mode networks, utilizing the concept of 'place' or structural equivalence as its fundamental framework. It primarily relies on the **Places** and **igraph** R packages. To illustrate this method, it employs an edge list representing students and their respective universities in the United States. The data source for this analysis is derived from the directory of an alumni club, specifically the American University Club of Shanghai, which was originally published in 1936. The paper proceeds through four main steps: (1) identification of places from the edge list, (2) transformation of the list of places into a network of places, along with its transposed network of universities, (3) visualization and analysis of the network, including community detection, and (4) the introduction of a more flexible approach grounded in the concepts of regular equivalence or k-places. 
+> This paper presents an effective approach for handling two-mode networks, utilizing the concept of 'place' or structural equivalence as its fundamental framework. It primarily relies on the **Places** and **igraph** R packages. To illustrate this method, it employs an edge list representing students and their respective universities in the United States. The data source for this analysis is derived from the directory of an alumni club, specifically the American University Club of Shanghai, which was originally published in 1936. The paper proceeds through four main steps: (1) Identification of places from the edge list, (2) Transformation of the list of places into a network of places, along with its transposed network of universities, (3) Visualization and analysis of the network, including community detection, and (4) Introduction of a more flexible approach grounded in the concepts of regular equivalence or k-places. 
 
 > Prerequisites: Basic notions of network analysis and the **tidyverse** suite.
 
@@ -54,7 +54,7 @@ library(kableExtra)
 
 ## Context
 
-Two-mode networks^[__Two-mode network__: A specific kind of network that involves two different types of nodes, such as persons and organizations. Such networks are also refer to as affiliation networks or two-mode graphs.], i.e. networks that involve two different types of nodes, such as persons and organizations, represent a significant proportion of network analysis research in the humanities and social sciences. Indeed, it is not always possible to gather first-hand data on direct relationships, such as friendship or family ties. In many situations, social relations are mediated by a third party or have to be inferred from indirect ties, such as school attendance, co-participation in events, membership in clubs or corporate boards.
+Two-mode networks^[__Two-mode network__: A specific kind of network that involves two different types of nodes, such as persons and organizations. Such networks also refer to as affiliation networks or two-mode graphs.], i.e. networks that involve two different types of nodes, such as persons and organizations, represent a significant proportion of network analysis research in the humanities and social sciences. Indeed, it is not always possible to gather first-hand data on direct relationships, such as friendship or family ties. In many situations, social relations are mediated by a third party or have to be inferred from indirect ties, such as school attendance, co-participation in events, membership in clubs or corporate boards.
 
 <div class="alert alert-success" role="alert"> 
 In this paper, we interchangeably use the terms "vertex" (plural: "vertices") and "node(s)" to refer to the network's nodes. We alternatively employ the terms "edge(s)" and "tie(s)" to designate the network's edges.</div>
@@ -63,7 +63,7 @@ Analyzing two-mode networks raises significant challenges, which have been exten
 
 The place-based methodology we aim to introduce in this paper offers a powerful alternative to the three mainstream approaches described above, as illustrated on Figure 1. First, it allows for a reduction of the network without sacrificing information. Second, it maintains the inherent duality property found in two-mode networks [@field_identifying_2006]. 
 
-```{r fig-1, echo=FALSE, out.width="100%",  fig.align = 'center', fig.cap= "Figure 1 - The place-based methodology"}
+```{r fig-1, echo=FALSE, out.width="100%",  fig.align = 'center', fig.cap= "Figure 1: The place-based methodology"}
 knitr::include_graphics("figures/fig.1.png")
 ```
 
@@ -73,11 +73,11 @@ It is crucial to underscore that, in this context, the concept of *place*^[__Pla
 A more flexible approach introduces a tolerance threshold, denoted as k. This allows for *regular equivalence*^[__Regular equivalence__: Two actors are regularly equivalent if they are equally related to equivalent others. That is, regular equivalence sets are composed of actors who have similar relations to members of other regular equivalence sets. It correspond quite closely to the sociological concept of a role.] rather than strict structural equivalence. By setting a value for k, we allow for a certain degree of variation or difference between individuals' affiliations. For example, if we set k = 1, we accept that two individuals may differ by one institution.</div> 
 
 <div class="alert alert-danger" role="alert">
-The concept of places is particularly relevant under the following conditions: 
+The concept of place is particularly relevant under the following conditions: 
 
-  1. When the data consists of two-mode relational data, such as club membership, interlocking boards, or co-participation in events; 
-  2. When there is multiple membership, meaning individuals are connected to more than one institution; 
-  3. When the range of membership per individual is not excessively wide; 
+  1. When the data consists of two-mode relational data, such as club membership, interlocking boards, or co-participation in events 
+  2. When there is multiple membership, meaning individuals are connected to more than one institution 
+  3. When the range of membership per individual is not excessively wide 
   4. When the distribution of members across institutions is not heavily skewed. 
 
 The last two conditions are not strictly necessary, but they significantly facilitate the initial interpretation of places.</div>
@@ -88,10 +88,10 @@ While popular software tools like [Cytoscape](https://cytoscape.org/) and [Gephi
 
 This paper relies on the following packages: 
 
-  * [dplyr](https://dplyr.tidyverse.org/): is a powerful and user-friendly tool for data manipulation, providing functions for filtering, selecting, mutating, summarizing, and arranging data frames in an efficient and readable manner.
+  * [dplyr](https://dplyr.tidyverse.org/) is a powerful and user-friendly tool for data manipulation, providing functions for filtering, selecting, mutating, summarizing, and arranging data frames in an efficient and readable manner.
   * [kableExtra](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html) is used to enhance the display of dataframes and make the data more legible.
-  * [Places](https://doi.org/10.5281/zenodo.13959942): a package specifically designed to find places in two-mode data. This package has been developed by Delio Lucena-Piquero (Science-Po Toulouse). 
-  * [igraph](https://r.igraph.org/): a reference package for building, analyzing and visualizing networks. 
+  * [Places](https://doi.org/10.5281/zenodo.13959942): A package specifically designed to find places in two-mode data. This package has been developed by Delio Lucena-Piquero (Science-Po Toulouse). 
+  * [igraph](https://r.igraph.org/): A reference package for building, analyzing and visualizing networks. 
 
 <div class="alert alert-success" role="alert">  
 Note that visualization is not **igraph**’s main strength. Other packages such as [tidygraph](https://tidygraph.data-imaginist.com/) can be utilized for improving visual aspects, but this is not the core focus of this paper. Additionally, it may be helpful to export the edge lists for further exploration with network analysis software such as [Gephi](https://gephi.org/) or [Cytoscape](https://cytoscape.org/), which enable greater interactivity.</div> 
@@ -100,7 +100,7 @@ Note that visualization is not **igraph**’s main strength. Other packages such
 
 The example data used in this paper was created by the author from a directory of the American University Club of Shanghai published in 1936 [@shanghai_american_1936], [@henriot_bonding_2024]. The original dataset can be downloaded from [Zenodo](https://doi.org/10.5281/zenodo.8047064). It is freely accessible and open for reuse. In this paper, we shall use a simplified version of the original dataset, which we describe below. 
 
-The dataset is typically an *edge list*^[__Edge list__: An edge list is a data structure used in network analysis to represent a graph as a list of its edges] of individuals linked to the universities they attended. It contains 682 academic curricula distributed among the 418 members of the American University Club of Shanghai. Since the individuals may have obtained several degrees from different universities, they may appear in several rows. Each row refers to a distinct curriculum.  
+The dataset is typically an *edge list*^[__Edge list__: An edge list is a data structure used in network analysis to represent a graph as a list of its edges.] of individuals linked to the universities they attended. It contains 682 academic curricula distributed among the 418 members of the American University Club of Shanghai. Since the individuals may have obtained several degrees from different universities, they may appear in several rows. Each row refers to a distinct curriculum.  
   
 To load the data, we run the following lines:
 ```{r}
@@ -115,20 +115,20 @@ auc <- read_delim("data/auc.csv", delim = ";", escape_double = FALSE,
 
 head(auc)
 ```
-The `names()` function lists the columns contained in the data frame and the `summary()` function provides a summary description of the dataset: 
+The `names()` function lists the columns contained in the data frame and the `summary()` function provides a summary description of the dataset. 
 ```{r}
 names(auc)
 ```
 <br>
 The data frame includes the following columns: 
 
-  * Name: the student's name;
-  * Nationality: the student's national origin (Chinese, Western, Japanese);
-  * University: the name of the university attended by the student;
-  * Degree: the nature of the academic degree obtained by the student;
-  * Field: the students' major field of study;
-  * Start_year: the student's year of enrollment or graduation;
-  * End_year: the year of graduation.
+  * Name: The student's name
+  * Nationality: The student's national origin (Chinese, Western, Japanese)
+  * University: The name of the university attended by the student
+  * Degree: The nature of the academic degree obtained by the student
+  * Field: The students' major field of study
+  * Start_year: The student's year of enrollment or graduation
+  * End_year: The year of graduation.
   
 ```{r}
 summary(auc)
@@ -147,7 +147,7 @@ Figure 2 presents a tentative workflow for developing an effective place-based m
   6.	A brief introduction to regular equivalence and the `k-places()` function.
 
 
-```{r fig-2, echo=FALSE, out.width="100%",  fig.align = 'center', fig.cap= "Figure 2 - Standard workflow for a place-based analysis (<a href='https://xmind.app/mindmap/places-in-two-mode-data-a-workflow/YX2g4H/?from=gallery#' target='_blank'>interactive version</a>)"}
+```{r fig-2, echo=FALSE, out.width="100%",  fig.align = 'center', fig.cap= "Figure 2: Standard workflow for a place-based analysis (<a href='https://xmind.app/mindmap/places-in-two-mode-data-a-workflow/YX2g4H/?from=gallery#' target='_blank'>interactive version</a>)"}
 knitr::include_graphics("figures/fig.2.png")
 ```
 
@@ -173,9 +173,9 @@ auc <- as.data.frame(auc)
  
 We can now apply the `place()` function, the key function to detect places. This function is made up of three arguments: 
 
-  * `data`: serves to specify the input dataset (e.g., the edge list of students and universities, "auc"). The input data must be an edge list.  
-  * `col.elements`: to select the source column, designated as "Elements" in the **Places** package terminology (in this specific case, the students). 
-  * `col.sets`: to select the target column, designated as "Sets" (i.e., the universities attended by the students). 
+  * `data`: To specify the input dataset (e.g., the edge list of students and universities, "auc"). The input data must be an edge list.  
+  * `col.elements`: To select the source column, designated as "Elements" in the **Places** package terminology (in this specific case, the students). 
+  * `col.sets`: To select the target column, designated as "Sets" (i.e., the universities attended by the students). 
 
 ```{r message = TRUE}
 Result1 <- places(data = auc, col.elements = "Name", col.sets = "University")
@@ -190,19 +190,19 @@ As indicated in the console, 223 unique places were found from the initial datas
 
 The `place()` function returns a list object which contains three data frames: 
 
-  1. The original two columns data frame and the column "Places" with places labels.
+  1. The original two-column data frame and the column "Places" with places labels.
   2. A data frame containing information about places.
   3. The network of places in a two-mode edge list format.
 
 The data frame containing information about places includes the following features: 
 
-  * `PlaceNumber`: the number of the place, ordered from the highest to the lowest number of sets. 
-  * `PlaceLabel`: the place number, and within parentheses, the number of elements and sets it contains. Labels start with P, followed by the place number, the number of elements in place and the number of sets defining the place.
-  * `NbElements`: the number of elements (students) contained in the place. 
-  * `NbSets`: the number of sets (universities) in the place. 
-  * `PlaceDetail`: this column contains important and detailed information about the places, including the names of all the elements within each place and the sets that define each place. 
+  * `PlaceNumber`: The number of the place, ordered from the highest to the lowest number of sets. 
+  * `PlaceLabel`: The place number, and within parentheses, the number of elements and sets it contains. Labels start with P, followed by the place number, the number of elements in place and the number of sets defining the place.
+  * `NbElements`: The number of elements (students) contained in the place. 
+  * `NbSets`: The number of sets (universities) in the place. 
+  * `PlaceDetail`: This column contains important and detailed information about the places, including the names of all the elements within each place and the sets that define each place. 
 
-To enable further manipulation, we extract the key information in a data frame format. Additionnally, we use **kableExtra** to enhance the table and make the data more legible. Only the 6 first rows are displayed below: 
+To enable further manipulation, we extract the key information in a data frame format. Additionnally, we use **kableExtra** to enhance the table and make the data more legible. Only the first 6 rows are displayed below: 
 ```{r}
 Result1_df <- as.data.frame(Result1$PlacesData) 
 
@@ -218,7 +218,7 @@ kable(head(Result1_df), caption = "First 6 places") %>%
 `kable()` is a function from the **knitr** package used for creating tables in a nicely formatted way. `kable_styling()` is a function that sets the styling options for the table:
   <ul>
     <li>`bootstrap_options = "striped"` applies striped row styling, which is a common styling choice in tables;</li>
-    <li>`full_width = TRUE`: indicates that the table should take up the full width of its container;</li>
+    <li>`full_width = TRUE` indicates that the table should take up the full width of its container;</li>
     <li>`position = "left"` specifies the position of the table on the page, in this case, aligning it to the left.</li>
   </ul>
 </div> 
@@ -250,10 +250,10 @@ ggplot(data = Result1_df, aes(x = NbElements)) +
 <br>
 Explanation: 
 
-  * `ggplot(data = Result1_df, aes(x = NbElements))`: initializes the ggplot object, specifying the data frame `Result1_df` and the aesthetic mapping `x = NbElements`.
-  * `geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7)`: adds the histogram layer to the plot. `binwidth` sets the width of the bins, `fill` and `color` set the fill and border colors, and `alpha` controls the transparency.
-  * `labs(title = "Students by place", x = "Number of Elements on X-axis", y = "Frequency")`: sets the title and axis labels.
-  * `theme_minimal()`: applies a minimal theme to the plot, but you can customize the theme based on your preferences.
+  * `ggplot(data = Result1_df, aes(x = NbElements))`: Initializes the ggplot object, specifying the data frame `Result1_df` and the aesthetic mapping `x = NbElements`.
+  * `geom_histogram(binwidth = 1, fill = "blue", color = "black", alpha = 0.7)`: Adds the histogram layer to the plot. `binwidth` sets the width of the bins, `fill` and `color` set the fill and border colors, and `alpha` controls the transparency.
+  * `labs(title = "Students by place", x = "Number of Elements on X-axis", y = "Frequency")`: Sets the title and axis labels.
+  * `theme_minimal()`: Applies a minimal theme to the plot, but you can customize the theme based on your preferences.
 
 The table and histogram below reveal that most places (179, or 80%) consist of unique trajectories centered on a single student. These places are perfectly aligned with individual students. This is an intriguing finding in itself. It suggests something significant about the structure of the network, which can be attributed by historical circumstances. Specifically, the prevalence of these idiosyncratic places reflects the widespread adoption of the elective system in American higher education institutions during the late 19th century.
 
@@ -317,19 +317,19 @@ If the data includes qualitative attributes, these attributes can be used to fur
 <table class="tg"><thead>
   <tr>
     <th class="tg-homa"></th>
-    <th class="tg-homa"><span style="font-weight:bold;background-color:white">SAME TIME</span></th>
-    <th class="tg-homa"><span style="font-weight:bold;background-color:white">DIFFERENT TIME</span></th>
+    <th class="tg-homa"><span style="font-weight:bold;background-color:white">Same Time</span></th>
+    <th class="tg-homa"><span style="font-weight:bold;background-color:white">Different Time</span></th>
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-2vf8"><span style="font-weight:bold">SAME DISCIPLINE</span></td>
-    <td class="tg-59kb">TYPE A : Strong potential for regular interaction (4 places, 9%)</td>
-    <td class="tg-59kb">TYPE C : Potential for later collaboration (7 places, 16%)</td>
+    <td class="tg-2vf8"><span style="font-weight:bold">Same Discipline</span></td>
+    <td class="tg-59kb">Type A: Strong potential for regular interaction (4 places, 9%)</td>
+    <td class="tg-59kb">Type C: Potential for later collaboration (7 places, 16%)</td>
   </tr>
   <tr>
-    <td class="tg-h04j"><span style="font-weight:bold">DIFFERENT DISCIPLINE</span></td>
-    <td class="tg-i610">TYPE B: Potential for extra-curricula interaction (8 places, 18%)</td>
-    <td class="tg-i610">TYPE D : Shared academic experience and cultural background (25 places, 32%)</td>
+    <td class="tg-h04j"><span style="font-weight:bold">Different Discipline</span></td>
+    <td class="tg-i610">Type B: Potential for extra-curricula interaction (8 places, 18%)</td>
+    <td class="tg-i610">Type D: Shared academic experience and cultural background (25 places, 32%)</td>
   </tr>
 </tbody>
 </table>
@@ -378,7 +378,7 @@ In the following section, we will demonstrate how to construct and analyze netwo
 
 As highlighted earlier, the result of place detection includes an edge list of places linked by sets (designated as "Edgelist"). We can take advantage of this list to build a network of places linked by universities (Sets) and its transposed network of universities (Sets) linked by places. This involves performing a dual projection, referred to as "reduction" in Figure 1, but applied to the places and sets rather than the students and universities.
 
-To build a network of places linked by universities, we begin by creating an adjacency matrix^[__Adjacency Matrix__: an adjacency matrix is a matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.] from the edge list: 
+To build a network of places linked by universities, we begin by creating an adjacency matrix^[__Adjacency Matrix__: An adjacency matrix is a matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.] from the edge list: 
 
 ```{r}
 bimod <- table(Result1$Edgelist$Places, Result1$Edgelist$Set) 
@@ -388,8 +388,8 @@ diag(PlacesMatrix) <- 0
 <br>
 In essence, the chunk above creates a two-mode network representation using a contingency table (here `bimod`) and then computes the cross-product of this bimodal matrix with its transpose to create a square matrix (`PlacesMatrix`). Finally, it sets the diagonal elements of this matrix to $0$. The resulting matrix may be used for analyzing relationships or patterns between places and sets in the context of the data stored in `Result1$Edgelist`. Below, we provide a detailed explanation of the code, line by line: 
 
-  * `table(Result1$Edgelist$Places, Result1$Edgelist$Set)`: uses the `table()` function to create a contingency table (cross-tabulation) of the occurrences of each combination of values in the vectors `Result1$Edgelist$Places` and `Result1$Edgelist$Set`. The result, assigned to the object `bimod`, is a two-dimensional table.
-  * `bimod %*% t(bimod)`: performs matrix multiplication. The `%*%` operator is used for matrix multiplication, and `t(bimod)` transposes the matrix `bimod`. The result is a matrix called `PlacesMatrix` that represents the cross-product of `bimod` and its transpose.
+  * `table(Result1$Edgelist$Places, Result1$Edgelist$Set)`: Uses the `table()` function to create a contingency table (cross-tabulation) of the occurrences of each combination of values in the vectors `Result1$Edgelist$Places` and `Result1$Edgelist$Set`. The result, assigned to the object `bimod`, is a two-dimensional table.
+  * `bimod %*% t(bimod)`: Performs matrix multiplication. The `%*%` operator is used for matrix multiplication, and `t(bimod)` transposes the matrix `bimod`. The result is a matrix called `PlacesMatrix` that represents the cross-product of `bimod` and its transpose.
 
 Next, we use the `graph_from_adjacency_matrix()` function included in the **igraph** package to transform the matrix into a network of places linked by universities.
 
@@ -414,7 +414,7 @@ An alternative method of projection is provided below.
 ```{r}
 # Creating a network from the list of Places links
 Net <- graph_from_data_frame(Result1$Edgelist, directed = FALSE)
-## Transformation into a 2-mode network
+# Transformation into a 2-mode network
 V(Net)$type <- bipartite_mapping(Net)$type
 # Projection
 projNet <- bipartite_projection(Net, multiplicity = TRUE)
@@ -465,11 +465,11 @@ In the network of sets (universities) linked by places, isolated nodes refer to 
 
 The `plot()` function from the **igraph** package includes various arguments. The first argument is required, as it specifies the network object to be plotted. The other arguments are optional. In the above example, we specified the following arguments: 
 
-  * `vertex.size`: size of vertices (or nodes); 
-  * `vertex.color`: color of vertices;
-  * `vertex.label.color`: color of vertices labels;
-  * `vertex.label.cex`: size of vertices labels;
-  * `main`: title for the graph. 
+  * `vertex.size`: Size of vertices (or nodes) 
+  * `vertex.color`: Color of vertices
+  * `vertex.label.color`: Color of vertices labels
+  * `vertex.label.cex`: Size of vertices labels
+  * `main`: Title for the graph. 
   
 We can remove the labels to improve legibility and adjust the node sizes according to the number of students in each place, to add meaningful information: 
 ```{r}
@@ -502,22 +502,22 @@ As evident from the plots, the two networks are each made up of a large, densely
 
 In network analysis, we usually distinguish between global metrics, which serve to characterize the overall structure of the network, and local metrics, which characterize the vertices and their relative position in the network.  
 
-### Global metrics
+### Global Metrics
 
 There are many metrics to define the structure of networks. In the following, we focus on the most basic ones, which can be computed with the following functions from the **igraph** package: 
 
-  * `summary()`: provides summary statistics on the network (nature of the network, number of vertices and ties, attributes if applicable);
-  * `edge_density()`: density of the graph;
-  * `count_components()`: number of components;
-  * `components()$size`: size of components;
-  * `table(E()$weight)`: table of edge weight.
+  * `summary()`: Provides summary statistics on the network (nature of the network, number of vertices and ties, attributes if applicable)
+  * `edge_density()`: Density of the graph
+  * `count_components()`: Number of components
+  * `components()$size`: Size of components
+  * `table(E()$weight)`: Table of edge weight.
   
 ```{r}
 summary(Net1)
 summary(Net2)
 ```
 <br>
-In both cases, the summary indicates that the two networks are undirected (U), named (N), weighted (W) networks (UNW), which are the options chosen during the transformation. The network of places linked by universities (Net1) contains 223 vertices (places) and 1606 ties (sets of universities). The network of universities linked by places includes 146 vertices (sets of universities) and 197 ties (places). The name of vertices is the only attribute.   
+In both cases, the summary indicates that the two networks are undirected (U), named (N), weighted (W) networks (UNW), which are the options chosen during the transformation. The network of places linked by universities (Net1) contains 223 vertices (places) and 1,606 ties (sets of universities). The network of universities linked by places includes 146 vertices (sets of universities) and 197 ties (places). The name of vertices is the only attribute.   
 
 ```{r}
 edge_density(Net1)
@@ -556,17 +556,17 @@ E(Net2)[weight == 4]
 <br>
 The results indicate that the most frequent circulations occurred between Columbia and New York University, which largely reflects their geographical proximity, as both universities are located in New York City. Other important ties link more distant universities, such as California and Columbia, or Hawaii and the University of Pennsylvania, which suggests that physical proximity was not the only factor accounting for the students' mobility. Further investigation is required to understand the logic underlying these strong ties, but one advantage of network analysis is to point out connections that would otherwise remain unnoticed.  
 
-### Local metrics
+### Local Metrics
 
 There are many metrics to measure the relative position of vertices in networks. In the following, we focus on the most popular centrality metrics, which can all be computed with the **igraph** package. 
 
-  * **Degree**: the number of ties a node has. It is the simplest measure of centrality. In the following, we use a normalized version of the measure in order to enable comparisons across networks built from different data structure. Since the projected networks are valued, it is also possible to calculate a weighted degree based on the intensity of the links. In the network of universities linked by places, for example, it measures the number of connections or ties (e.g., places) each university has with other universities in the network. It can be interpreted as a measure of university popularity or the extent to which a university is actively connected to other institutions.
-  * **Eigenvector**: the number of connections a node has to other well-connected nodes. It is a measure of the influence of a node in a network. In the network of universities, it quantifies the extent to which a university is connected to other influential universities. Universities with high eigenvector centrality are connected to other highly influential institutions, indicating their own influence and prestige.
-  * **Betweenness**: the number of times a node acts as a bridge along the shortest path between two other nodes. In this sense, the more central a node is, the greater control it has over the flows that goes through it. It is often considered as a measure of brokerage, or the capacity of a node to mediate between other nodes. In the network of universities linked by places, it quantifies the university’s brokering power or the frequency with which it falls on the shortest path between other universities. Universities with high betweenness centrality play a crucial role in connecting different parts of the network and facilitating students' exchanges between institutions. 
-  * **Closeness**: the average length of the shortest path between the node and all other nodes in the graph. In this sense, the more central a node is, the closer it is to all other nodes. It measures how quickly influence can spread from one university to another through direct or indirect connections. Universities with high closeness centrality are considered central in terms of being well-connected and easily reachable within the network. This is particularly relevant in the subnetwork of specialized institutions, such as the Massachusetts Institute of Technology.
+  * **Degree**: The number of ties a node has. It is the simplest measure of centrality. In the following, we use a normalized version of the measure in order to enable comparisons across networks built from different data structure. Since the projected networks are valued, it is also possible to calculate a weighted degree based on the intensity of the links. In the network of universities linked by places, for example, it measures the number of connections or ties (e.g., places) each university has with other universities in the network. It can be interpreted as a measure of university popularity or the extent to which a university is actively connected to other institutions.
+  * **Eigenvector**: The number of connections a node has to other well-connected nodes. It is a measure of the influence of a node in a network. In the network of universities, it quantifies the extent to which a university is connected to other influential universities. Universities with high eigenvector centrality are connected to other highly influential institutions, indicating their own influence and prestige.
+  * **Betweenness**: The number of times a node acts as a bridge along the shortest path between two other nodes. In this sense, the more central a node is, the greater control it has over the flows that goes through it. It is often considered as a measure of brokerage, or the capacity of a node to mediate between other nodes. In the network of universities linked by places, it quantifies the university’s brokering power or the frequency with which it falls on the shortest path between other universities. Universities with high betweenness centrality play a crucial role in connecting different parts of the network and facilitating students' exchanges between institutions. 
+  * **Closeness**: The average length of the shortest path between the node and all other nodes in the graph. In this sense, the more central a node is, the closer it is to all other nodes. It measures how quickly influence can spread from one university to another through direct or indirect connections. Universities with high closeness centrality are considered central in terms of being well-connected and easily reachable within the network. This is particularly relevant in the subnetwork of specialized institutions, such as the Massachusetts Institute of Technology.
 
 
-Since betweenness and closeness centralities make sense only in fully connected networks, we first need to extract the main component in each network. We can resort to the `components()` function to find the ID number of the largest component in each network. In this specific case, the largest one is component n°1 in Net1 and n°1 in Net2. Then, we  apply the `induced_subgraph()` function to extract these components:
+Since betweenness and closeness centralities make sense only in fully connected networks, we first need to extract the main component in each network. We can resort to the `components()` function to find the ID number of the largest component in each network. In this specific case, the largest is component n°1 in Net1 and n°1 in Net2. Then, we  apply the `induced_subgraph()` function to extract these components:
 ```{r}
 # components(Net1) (not run in this session)
 # components(Net2) (not run in this session)
@@ -586,7 +586,7 @@ univ_metrics_df <- as.data.frame(univ_metrics)
 head(univ_metrics_df %>% arrange(desc(Degree2)))
 ```
 <br>
-The table presents the 6 first universities ranked by degree centrality. Columbia University clearly stands out, meaning that it attracted the larger number of students. Columbia also has the highest eigenvector centrality, which means that it was connected to other important universities. It also shows a high betweenness centrality score, meaning that it serves as an important bridge in the academic network.   
+The table presents the first 6 universities ranked by degree centrality. Columbia University clearly stands out, meaning that it attracted the largest number of students. Columbia also has the highest eigenvector centrality, which means that it was connected to other important universities. It also shows a high betweenness centrality score, meaning that it serves as an important bridge in the academic network.   
 
 We can visualize the relative importance of universities in the network by indexing the size of vertices on their centrality metrics. In the following example, we chose to make the size of vertices proportionate to their degree centrality.  
 
@@ -653,7 +653,7 @@ table(sizes(lvc2))
 <br>
 In the next section, we will show how to visualize the communities. 
 
-## Visualizating Communities
+## Visualizing Communities
 
 ### Network of Places
 
@@ -710,21 +710,20 @@ place_clusters <- data.frame(lvc1$membership, lvc1$names) %>%
 place_clusters <- inner_join(x = place_clusters, y = Result1_df, by = "PlaceLabel") 
 
 
-kable(head(place_clusters), caption = "Communities of places (6 first places)") %>%
+kable(head(place_clusters), caption = "Communities of places (first 6 places)") %>%
   kable_styling(bootstrap_options = "striped", full_width = TRUE, position = "left")
 
 ```
 <br>
 We follow the same method for extracting community membership in the network of universities: 
 ```{r}
-univ_clusters <- data.frame(lvc2$membership, lvc2$names)  %>% 
+univ_clusters <- data.frame(lvc2$membership, lvc2$names) %>% 
   group_by(lvc2.membership) %>%  
   add_tally() %>%
   rename(University = lvc2.names, cluster_no = lvc2.membership, cluster_size = n) %>%
   select(cluster_no, cluster_size, University)
 
-
-kable(head(univ_clusters), caption = "Communities of universities (6 first places)") %>%
+kable(head(univ_clusters), caption = "Communities of universities (first 6 places)") %>%
   kable_styling(bootstrap_options = "striped", full_width = TRUE, position = "left")
 
 ```
@@ -824,7 +823,7 @@ plot(gu6,
      main = "Cornell community (universities)")
 ```
 
-For an in-depth analysis of university and place-based communities, please refer to my aforementioned paper [@henriot_bonding_2024], where I demonstrate how the joint analysis of communities of places and universities can be used to examine patterns of student mobility within select groups of universities. 
+For an in-depth analysis of university and place-based communities, please refer to my aforementioned paper [@henriot_bonding_2024], where I demonstrate how the joint analysis of communities of places and universities can be used to examine patterns of student mobility within selected groups of universities. 
 
 <div class="alert alert-success" role="alert">
 These visual observations can be corroborated by retrieving the global metrics of each community. To maintain brevity in this paper, we do not undertake this process here. Interested readers are encouraged to consult the [comprehensive documentation](https://bookdown.enpchina.eu/AUC/Places3.html#Structural_analysis) produced by the author for further details.</div>  
@@ -835,10 +834,10 @@ The final section introduces the notion of *regular equivalence* as a more flexi
 
 The **Places** package includes a `k-places()` function which is specifically designed to identify regular equivalence patterns within two-mode networks. The `k-places()` function is very similar to the `place()` function. It includes four main arguments: 
 
-  * `data`: the input data frame (auc);
-  * `col.elements`: the name of the column of elements (e.g., students);
-  * `col.sets`: the name of the column of sets (e.g., universities);
-  * `k`: a natural number that indicates the tolerance threshold.
+  * `data`: The input data frame (auc)
+  * `col.elements`: The name of the column of elements (e.g., students)
+  * `col.sets`: The name of the column of sets (e.g., universities)
+  * `k`: A natural number that indicates the tolerance threshold.
   
 In the following example, we set $k = 1$, meaning that we tolerate only one difference among the universities attended by students.   
 ```{r}
@@ -857,7 +856,7 @@ The `k-places()` function returns a list with four data frames:
 
 The data frame (2) containing information about places and k-places includes the following features: 
 
-  * `PlaceLabel` contains places and k-places labels. Places labels start with P, followed by the place number, the number of elements in place and the number of sets defining place. K-Places labels start with P, followed by the k-place number, an *, the number of elements in k-place, the number of sets in common, and the value of $k$.
+  * `PlaceLabel` contains places and k-places labels. Places labels start with P, followed by the place number, the number of elements in place and the number of sets defining place. K-places labels start with P, followed by the k-place number, an *, the number of elements in k-place, the number of sets in common, and the value of $k$.
   * `NbElements` contains the number of elements in the place or k-place.
   * `NbSets` contains the number of sets defining the place or k-place.
   * `PlaceDetail` contains the name of all the elements in the place or k-place and all the sets defining the place or k-place. 
@@ -887,7 +886,7 @@ The 2 k-places identified contain 2 elements (students) and 3 sets (universities
 
 # Conclusion
 
-This paper has laid the foundations for a standard workflow based on the **Places** R package, which can be reused and adapted for other research across diverse disciplinary fields. This method can be applied to virtually any type of nodes, not only human and social actors, but also objects, concepts, and other entities. Furthermore, it can be extended to multimodal networks involving more than two different types of nodes. For example, the places could encompass not only the universities attended by the students but also their place of birth or the institutions in which they were employed. Interested readers can refer to my article [@henriot_bonding_2024], which provides a detailed demonstration of the multiple possible uses of place-based networks to advance historical findings. Specifically, this article explores how the network was used to identify typical trajectories among American and Chinese alumni, examine how these educational trajectories shaped future careers and collaborations, and trace the formation of places and the emergence of university rankings over time. Ultimately, we hope this paper will inspire innovative research based on this framework. 
+This paper has laid the foundations for a standard workflow based on the **Places** R package, which can be reused and adapted for other research across diverse disciplinary fields. This method can be applied to virtually any type of nodes, not only human and social actors, but also objects, concepts, and other entities. Furthermore, it can be extended to multimodal networks involving more than two different types of nodes. For example, the places could encompass not only the universities attended by the students but also their place of birth or the institutions in which they were employed. Interested readers can refer to my article [@henriot_bonding_2024], which provides a detailed demonstration of the multiple possible uses of place-based networks to advance historical findings. Specifically, this article explores how the network was used to identify typical trajectories among American and Chinese alumni, examines how these educational trajectories shaped future careers and collaborations, and traces the formation of places and the emergence of university rankings over time. Ultimately, we hope this paper will inspire innovative research based on this framework. 
 
 
 <div class="alert alert-success" role="alert">
