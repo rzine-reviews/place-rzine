@@ -924,12 +924,13 @@ kableExtra::kable_styling(knitr::kable(rzine::sessionRzine()[[2]], row.names = F
 
 ```{r Citation, echo=FALSE}
 rref <- bibentry(
-   bibtype = "misc",
+   bibtype = "article",
    title = "Uncovering Places in Two-Mode Networks",
    subtitle = "Using Structural Equivalence to Study Affiliation Networks",
    author = c("Cécile Armand"),
-   doi = "10.48645/xxxxxx",
-   url = "https://rzine.fr/publication_rzine/xxxxxxx/",
+   journal = "Rzine",
+   doi = "10.48645/nk8x-8d47",
+   url = "https://rzine.fr/articles_rzine/20241003_carmand_place/",
    keywords ="FOS: Other social sciences",
    language = "fr",
    publisher = "FR2007 CIST",
