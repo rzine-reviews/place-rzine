@@ -1,4 +1,4 @@
-# Uncovering Places in Two-Mode Networks [<img src="https://rzine.fr/img/Rzine_logo.png"  align="right" width="120"/>](http://rzine.fr/)
+# Uncovering Places in Two-Mode Networks  [<img src="https://rzine.fr/assets/img/rzine.png"  align="right" width="120"/>](http://rzine.fr/)
 ### Using Structural Equivalence to Study Affiliation Networks
 **Cécile Armand (École Normale Supérieure de Lyon)**
 <br/>  
