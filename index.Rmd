@@ -1,7 +1,7 @@
 ---
 title: "Uncovering Places in Two-Mode Networks"
 subtitle: "Using Structural Equivalence to Study Affiliation Networks"
-date: "`r Sys.Date()`"
+date: "2024-11-15"
 author: 
  - name: Cécile Armand
    affiliation: École Normale Supérieure de Lyon
@@ -16,9 +16,9 @@ bibliography: biblio.bib
 nocite: |
   @*
 link-citations: true
-# github: "author/repository"
+github: "rzine-reviews/place-rzine"
 # gitlab: "gitlab.huma-num.fr/author/repository"
-# doi: "xx.xxx/xxxx.xxxxxxx"
+doi: "10.48645/nk8x-8d47"
 licence: "by-sa"
 
 # Only Creative Commons Licence 
